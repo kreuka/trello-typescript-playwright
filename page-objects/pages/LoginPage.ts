@@ -1,12 +1,12 @@
 import { Locator, Page } from "@playwright/test";
-import { BasePage } from "./BasePage";
+import BasePage from "./BasePage";
 
-export class LoginPage extends BasePage {
-  readonly url = "https://trello.com/login";
-  readonly emailInput: Locator;
-  readonly passwordInput: Locator;
-  readonly logInButton: Locator;
-  readonly continueButton: Locator;
+export default class LoginPage extends BasePage {
+  private url = "https://trello.com/login";
+  private emailInput: Locator;
+  private passwordInput: Locator;
+  private logInButton: Locator;
+  private continueButton: Locator;
 
   constructor(page: Page) {
     super(page);
