@@ -9,6 +9,10 @@ export default class Column extends Component {
   private addListButton = this.page.getByText("Add list");
   private closeIcon = this.page.getByTestId("list-composer-cancel-button");
   
+  async expectLoaded(): Promise<void> {
+    expect(this.column).toBeVisible();
+  }
+
   async clickOnAddColumnButton() {
     await this.addColumnButton.click();
   }

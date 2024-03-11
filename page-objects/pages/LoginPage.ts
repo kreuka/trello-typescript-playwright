@@ -1,23 +1,20 @@
-import { Locator, Page } from "@playwright/test";
-import BasePage from "./BasePage";
+import { expect } from "@playwright/test";
+import BasePage from "../BasePage";
 
 export default class LoginPage extends BasePage {
-  private url = "https://trello.com/login";
-  private emailInput: Locator;
-  private passwordInput: Locator;
-  private logInButton: Locator;
-  private continueButton: Locator;
-
-  constructor(page: Page) {
-    super(page);
-    this.emailInput = page.getByPlaceholder("Enter email");
-    this.passwordInput = page.getByPlaceholder("Enter password");
-    this.logInButton = page.getByRole("button", { name: "Log in" });
-    this.continueButton = page.getByRole("button", { name: "Continue" });
-  }
+  pagePath = "https://trello.com/login";
+  private loginForm = this.page.getByRole("main");
+  private emailInput = this.page.getByPlaceholder("Enter email");
+  private passwordInput = this.page.getByPlaceholder("Enter password");
+  private logInButton = this.page.getByRole("button", { name: "Log in" });
+  private continueButton = this.page.getByRole("button", { name: "Continue" });
 
   async navigate(): Promise<void> {
-    await this.page.goto(this.url);
+    await this.page.goto(this.pagePath);
+  }
+
+  async expectLoaded(): Promise<void> {
+    expect(this.loginForm).toBeVisible();
   }
 
   async fillEmail(emailValue: string): Promise<void> {

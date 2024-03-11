@@ -1,9 +1,15 @@
-import BasePage from "./BasePage";
+import { expect } from "@playwright/test";
+import BasePage from "../BasePage";
 
 export default class HomePage extends BasePage {
-  private url = "https://trello.com/u/boards";
+  pagePath = "https://trello.com/u/boards";
+  private userBoards = this.page.getByText("YOUR WORKSPACES");
 
   async navigate() {
-    await this.page.goto(this.url); 
+    await this.page.goto(this.pagePath); 
+  }
+
+  async expectLoaded(): Promise<void> {
+    expect(this.userBoards).toBeVisible();
   }
 }

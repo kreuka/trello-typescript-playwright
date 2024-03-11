@@ -1,10 +1,11 @@
 import { expect } from "@playwright/test";
-import BasePage from "./BasePage";
+import DynamicBasePage from "../DynamicBasePage";
 
-export default class BoardPage extends BasePage {
+export default class BoardPage extends DynamicBasePage {
   private boardTitle = this.page.getByTestId("board-name-display");
-  async navigate(): Promise<void> {
-    throw new Error("Board page doesn't have a navigate method");  
+
+  async expectLoaded(): Promise<void> {
+    expect(this.boardTitle).toBeVisible();
   }
 
   async verifyBoardTitle(boardTitle: string): Promise<void> {
