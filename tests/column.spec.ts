@@ -3,7 +3,7 @@ import HeaderCreateMenu from "../page-objects/components/HeaderCreateMenu";
 import Column from "../page-objects/components/Column";
 import { loggedUserFixture } from "../fixtures/loggedUserFixture";
 
-loggedUserFixture("Verify the ability to create a column",  async ({ page }) => {
+loggedUserFixture("@TC-3, Verify the ability to create a column",  async ({ page }) => {
   // create a board
   const header = new Header(page);
   await header.clickOnCreate();

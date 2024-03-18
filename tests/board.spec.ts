@@ -3,7 +3,7 @@ import Header from "../page-objects/components/Header";
 import HeaderCreateMenu from "../page-objects/components/HeaderCreateMenu";
 import BoardPage from "../page-objects/pages/BoardPage";
 
-loggedUserFixture("Verify the ability to create a board", async ({ page }) => {
+loggedUserFixture("@TC-2, Verify the ability to create a board", async ({ page }) => {
   const header = new Header(page);
   await header.clickOnCreate();
   await header.chooseCreateBoardOptionFromCreateDropdown();
