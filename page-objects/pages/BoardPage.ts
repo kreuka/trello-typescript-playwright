@@ -1,7 +1,9 @@
 import { expect } from "@playwright/test";
-import DynamicBasePage from "../DynamicBasePage";
+import { Navigatable } from "../interfaces/Navigatable";
+import BasePage from "../BasePage";
 
-export default class BoardPage extends DynamicBasePage {
+export default class BoardPage extends BasePage implements Navigatable {
+  pagePath = "/b";
   private boardTitle = this.page.getByTestId("board-name-display");
 
   async expectLoaded(): Promise<void> {

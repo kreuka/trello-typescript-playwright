@@ -1,4 +1,4 @@
-interface Board {
+export interface CreateBoard {
   name: string,
   desc?: string,
   defaultLists?: boolean,
@@ -8,7 +8,7 @@ interface BoardBuilderInterface {
   setName(name: string): BoardBuilderInterface,
   setDescription(description: string): BoardBuilderInterface,
   setDefaultLists(isSetDefaultLists: boolean): BoardBuilderInterface,
-  build(): Board,
+  build(): CreateBoard,
 }
 
 export class BoardBuilder implements BoardBuilderInterface {
@@ -31,7 +31,7 @@ export class BoardBuilder implements BoardBuilderInterface {
     return this;
   }
 
-  build(): Board {
+  build(): CreateBoard {
     if (!this.name) throw new Error("Name is missing");
 
     return {
