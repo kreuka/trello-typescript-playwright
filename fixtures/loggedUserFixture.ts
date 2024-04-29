@@ -2,8 +2,8 @@ import { test as base } from "@playwright/test";
 import LoginPage from "../page-objects/pages/LoginPage";
 import HomePage from "../page-objects/pages/HomePage";
 
-export const loggedUserFixture = base.extend<{ loginPage: LoginPage }>({
-  loginPage: [async ({ page }, use) => {
+export const loggedUserFixture = base.extend<{ homePage: HomePage }>({
+  homePage: [async ({ page }, use) => {
     const loginPage = new LoginPage(page);
     await loginPage.navigate();
     await loginPage.fillEmail(process.env.EMAIL!);
@@ -12,7 +12,7 @@ export const loggedUserFixture = base.extend<{ loginPage: LoginPage }>({
     await loginPage.clickLogInButton();
     const homePage = new HomePage(page);
     await homePage.expectLoaded();
-    await use(loginPage);
+    await use(homePage);
   },
   { auto: true }]
 });

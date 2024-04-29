@@ -1,7 +1,10 @@
 import { expect } from "@playwright/test";
 import { Component } from "../Component";
+import CreateMenu from "./CreateMenu";
 
 export default class Header extends Component {
+  createMenu = new CreateMenu(this.page);
+  
   private createButton = this.page.getByTestId("header-create-menu-button");
   private createDropdownCreateBoardOption = this.page.getByTestId("header-create-board-button");
 

@@ -1,10 +1,11 @@
-import { loggedUserFixture as base } from "./loggedUserFixture";
+import { loggedUserFixture } from "./loggedUserFixture";
 import { BoardBuilder } from "../api/builders/entities/boardBuilder";
 import { BoardController } from "../api/controllers/board.controller";
 import { CreateBoardResponse } from "../api/types/CreateBoardResponse";
 import { randomUUID } from "crypto";
+import BoardPage from "../page-objects/pages/BoardPage";
 
-export const loggedUserWithBoardFixture = base.extend<{ board: CreateBoardResponse }>({
+export const loggedUserWithBoardFixture = loggedUserFixture.extend<{ board: CreateBoardResponse, boardPage: BoardPage }>({
   board: async ({ request }, use) => {
     const boardBody = new BoardBuilder()
       .setName(`${randomUUID()}_board`)
@@ -16,5 +17,9 @@ export const loggedUserWithBoardFixture = base.extend<{ board: CreateBoardRespon
     await use(createBoardResponse);
 
     await new BoardController(request).deleteBoard(createBoardResponse.id);
-  }
+  },
+  boardPage: async ({ page }, use) => {
+    const boardPage = new BoardPage(page);
+    await use(boardPage);
+  },
 });
