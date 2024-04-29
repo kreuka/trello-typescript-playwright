@@ -7,7 +7,7 @@ import { BaseController } from "./base.controller";
 export class BoardController<T> extends BaseController<T> {
   async createBoard(data: CreateBoard): Promise<CreateBoardResponse> {
     return await this.request()
-      .setUrl(`${process.env.API_BASE_URL}/${APIRoutes.Boards}`)
+      .setUrl(`${process.env.API_BASE_URL}${APIRoutes.Boards}`)
       .setMethod("POST")
       .setData(data)
       .send() as Promise<CreateBoardResponse>;

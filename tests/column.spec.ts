@@ -1,4 +1,4 @@
-import { loggedUserWithBoardFixture } from "../fixtures/loggerUserWithBoardFixture";
+import { loggedUserWithBoardFixture } from "../fixtures/loggedUserWithBoardFixture";
 
 loggedUserWithBoardFixture("@TC-3, Verify the ability to create a column",  async ({ board, boardPage }) => {
   await boardPage.navigate(board.url);
