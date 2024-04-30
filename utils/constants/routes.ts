@@ -1,4 +1,5 @@
 export enum APIRoutes {
   Boards = "/boards",
-  Columns = "/lists"
+  Cards = "/cards",
+  Columns = "/lists",
 }

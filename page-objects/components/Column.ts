@@ -1,7 +1,10 @@
 import { expect } from "@playwright/test";
 import { Component } from "../Component";
+import Card from "./Card";
 
 export default class Column extends Component {
+  card = new Card(this.page);
+  
   private column = this.page.getByTestId("list");
   private columnTitle = this.page.getByTestId("list-name");
   private addColumnButton = this.page.locator("[data-testid='list-composer-button'] [data-testid='AddIcon']");
