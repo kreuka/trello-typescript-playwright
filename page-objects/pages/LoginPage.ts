@@ -10,7 +10,7 @@ export default class LoginPage extends BasePage {
   private continueButton = this.page.getByRole("button", { name: "Continue" });
 
   async expectLoaded(): Promise<void> {
-    expect(this.loginForm).toBeVisible();
+    await expect(this.loginForm).toBeVisible();
   }
 
   async fillEmail(emailValue: string): Promise<void> {

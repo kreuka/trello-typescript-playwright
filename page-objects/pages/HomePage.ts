@@ -11,6 +11,6 @@ export default class HomePage extends BasePage {
 
   async expectLoaded(): Promise<void> {
     await this.page.waitForLoadState("networkidle");
-    expect(this.userBoards).toBeVisible();
+    await expect(this.userBoards).toBeVisible();
   }
 }

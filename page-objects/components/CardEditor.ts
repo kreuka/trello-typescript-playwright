@@ -9,14 +9,14 @@ export default class CardEditor extends Component {
   private archieveBanner = this.page.getByTestId("card-back-archive-banner");
   
   async expectLoaded(): Promise<void> {
-    expect(this.cardEditor).toBeVisible();
+    await expect(this.cardEditor).toBeVisible();
   }
 
   async expectClosed(): Promise<void> {
-    expect(this.cardEditor).not.toBeVisible();
+    await expect(this.cardEditor).not.toBeVisible();
   }
 
   async verifyOpenedCardIsArchieved(): Promise<void> {
-    expect(this.archieveBanner).toBeVisible();
+    await expect(this.archieveBanner).toBeVisible();
   }
 }

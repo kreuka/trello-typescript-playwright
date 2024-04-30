@@ -8,7 +8,7 @@ loggedUserWithCardFixture("@TC-4, Verify the ability to delete a card",  async (
   await boardPage.column.card.cardEditor.verifyOpenedCardIsArchieved();
 
   await boardPage.column.card.cardEditor.sidebar.deleteOpenedCard();
-  await boardPage.column.card.cardEditor.sidebar.popup.confirmCardDeletion();
+  await boardPage.column.card.cardEditor.sidebar.popup.clickConfirmButton();
 
   await boardPage.column.card.cardEditor.expectClosed();
   await boardPage.column.card.expectCardByNameIsNotVisible(card.name);

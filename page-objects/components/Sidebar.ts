@@ -18,6 +18,6 @@ export default class Sidebar extends Component {
   }
 
   async expectLoaded(): Promise<void> {
-    expect(this.sidebar).toBeVisible();
+    await expect(this.sidebar).toBeVisible();
   }
 }

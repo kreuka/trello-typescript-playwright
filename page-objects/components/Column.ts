@@ -13,7 +13,7 @@ export default class Column extends Component {
   private closeIcon = this.page.getByTestId("list-composer-cancel-button");
   
   async expectLoaded(): Promise<void> {
-    expect(this.column).toBeVisible();
+    await expect(this.column).toBeVisible();
   }
 
   async clickOnAddColumnButton() {

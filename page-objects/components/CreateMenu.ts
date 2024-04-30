@@ -6,7 +6,7 @@ export default class CreateMenu extends Component {
   private createBoardButton = this.page.getByTestId("create-board-submit-button");
 
   async expectLoaded(): Promise<void> {
-    expect(this.boardTitleInput).toBeVisible();
+    await expect(this.boardTitleInput).toBeVisible();
   }
 
   async fillBoardTitle(boardTitle: string): Promise<void> {

@@ -1,4 +1,5 @@
 import { loggedUserFixture } from "../fixtures/loggedUserFixture";
+import { loggedUserWithBoardFixture } from "../fixtures/loggedUserWithBoardFixture";
 import BoardPage from "../page-objects/pages/BoardPage";
 
 loggedUserFixture("@TC-2, Verify the ability to create a board", async ({  page, homePage }) => {
@@ -12,4 +13,13 @@ loggedUserFixture("@TC-2, Verify the ability to create a board", async ({  page,
   
   const boardPage = new BoardPage(page);
   await boardPage.verifyBoardTitle(boardTitle);
+});
+
+loggedUserWithBoardFixture("@TC-5, Verify the ability to delete a board throught the Workspace navigation panel", async ({ board, boardPage }) => {
+  await boardPage.navigate(board.url);
+  await boardPage.boardHeader.openBoardMenu();
+  await boardPage.boardHeader.boardMenu.closeCurrentBoard();
+  await boardPage.boardHeader.boardMenu.popup.clickConfirmButton();
+  
+  await boardPage.closeBoardPanel.expectLoaded();
 });

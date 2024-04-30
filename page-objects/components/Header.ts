@@ -9,7 +9,7 @@ export default class Header extends Component {
   private createDropdownCreateBoardOption = this.page.getByTestId("header-create-board-button");
 
   async expectLoaded(): Promise<void> {
-    expect(this.createButton).toBeVisible();
+    await expect(this.createButton).toBeVisible();
   }
 
   async clickOnCreate(): Promise<void> {
