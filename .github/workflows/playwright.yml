@@ -3,9 +3,15 @@ on:
   workflow_dispatch:
   push:
     branches: [ main ]
+  pull_request: 
+    branches: [ main ]
 jobs:
-  test:
+  setup-and-run-tests:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1/2, 2/2]
     env:
       EMAIL: ${{ secrets.EMAIL }}
       PASSWORD: ${{ secrets.PASSWORD }}
@@ -14,43 +20,71 @@ jobs:
       TRELLO_API_TOKEN: ${{ secrets.TRELLO_API_TOKEN }}
       TRELLO_API_SECRET: ${{ secrets.TRELLO_API_SECRET }}
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
       with:
         node-version: 18
+
     - name: Install dependencies
       run: npm ci
+
     - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
+      run: npx playwright install chromium
+
     - name: Run Playwright tests
-      run: npx playwright test
-    - uses: actions/upload-artifact@v4
-      if: ${{ !cancelled() }}
+      run: npx playwright test --shard ${{ matrix.shard }}
+
+    - name: Upload blob report to GitHub Actions Artifacts
+      if: always()
+      uses: actions/upload-artifact@v3
       with:
-        name: playwright-report
-        path: playwright-report/
-        retention-days: 30
+        name: merged-reports-as-blob
+        path: blob-report
+        retention-days: 14
 
-  publishTestResults:
-    name: "Publish Test Results to to testresults.marcusfelling.com"
-    needs:
-      [
-        test,
-      ]
-    runs-on: ubuntu-latest
+  merge-reports-and-upload:
     if: always()
-    steps:
-      - name: Download artifacts
-        uses: actions/download-artifact@v2
-        id: download
+    needs: [setup-and-run-tests]
+    runs-on: ubuntu-latest
 
-      - name: Publish to GH Pages
-        if: always()
-        uses: peaceiris/actions-gh-pages@v3.7.3
+    outputs:
+      timestamp: ${{ steps.timestampid.outputs.timestamp }}
+
+    steps:
+      - name: Set a timestamp
+        id: timestampid
+        run: echo "timestamp=$(date --utc +%Y%m%d_%H%M%SZ)" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          publish_branch: main
-          personal_token: ${{ secrets.GIT_ACCESS_TOKEN }}
-          publish_dir: ${{steps.download.outputs.download-path}}
-          keep_files: true
-          user_name: "github-actions[bot]"
-          user_email: "github-actions[bot]@users.noreply.github.com"
+          node-version: 18
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Download blob reports from GitHub Actions Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: merged-reports-as-blob
+          path: downloaded-merged-reports-as-blob
+
+      - name: Merge the blobs into one single HTML Report
+        run: npx playwright merge-reports --reporter html ./downloaded-merged-reports-as-blob
+
+      - name: Upload full html report to artifacts for history
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: playwright-report-${{ steps.timestampid.outputs.timestamp }}
+          path: playwright-report
+          retention-days: 14
+
+      - name: Push the new files to github pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./playwright-report
+          destination_dir: ${{ steps.timestampid.outputs.timestamp }}
+        
+      - name: Write URL in summary
+        run: echo "### Test results (link available after 20 secs) - https://${{ github.repository_owner }}.github.io/playwright-example-with-typescript/${{ steps.timestampid.outputs.timestamp }}/" >> $GITHUB_STEP_SUMMARY
