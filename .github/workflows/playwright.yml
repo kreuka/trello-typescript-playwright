@@ -49,7 +49,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3.7.3
         with:
           publish_branch: main
-          personal_token: ${{ secrets.PERSONAL_TOKEN }}
+          personal_token: ${{ secrets.GIT_ACCESS_TOKEN }}
           publish_dir: ${{steps.download.outputs.download-path}}
           keep_files: true
           user_name: "github-actions[bot]"
