@@ -5,7 +5,6 @@ import "dotenv/config";
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-  globalTeardown: require.resolve("./global-teardown.ts"),
   testDir: "./tests",
   /* Run tests in files in parallel */
   fullyParallel: true,
