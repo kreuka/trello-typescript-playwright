@@ -2,28 +2,11 @@
 name: Deploy Report to Pages
 
 on:
-  # Runs on pushes targeting the default branch
-  push:
-    branches: ["main"]
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
-
+  push:
+    branches: [main]
 jobs:
-  # Single deploy job since we're just deploying
-  deploy:
+  tests:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -52,6 +35,28 @@ jobs:
         uses: actions/upload-pages-artifact@v1
         with:
           path: './playwright-report'
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v2
+      
+
+  publishTestResults:
+    name: "Publish Test Results to to testresults.marcusfelling.com"
+    needs:
+      [
+        tests,
+      ]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v2
+        id: download
+
+      - name: Publish to GH Pages
+        if: always()
+        uses: peaceiris/actions-gh-pages@v3.7.3
+        with:
+          publish_branch: main
+          personal_token: ${{ secrets.PERSONAL_TOKEN }}
+          publish_dir: ${{steps.download.outputs.download-path}}
+          keep_files: true
+          user_name: "github-actions[bot]"
+          user_email: "github-actions[bot]@users.noreply.github.com"
