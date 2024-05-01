@@ -39,7 +39,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: merged-reports-as-blob
-        path: blob-report
+        path: playwright-report
         retention-days: 14
 
   merge-reports-and-upload:
