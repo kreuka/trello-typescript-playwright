@@ -15,6 +15,10 @@ export default class Card extends Component {
     await expect(this.anyCard).toBeVisible();
   }
 
+  async expectCardByNameIsVisible(name: string): Promise<void> {
+    await expect(this.cardByName(name)).toBeVisible();
+  }
+
   async expectCardByNameIsNotVisible(name: string): Promise<void> {
     await expect(this.cardByName(name)).not.toBeVisible();
   }
