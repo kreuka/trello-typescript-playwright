@@ -6,7 +6,7 @@ export default class BoardMenu extends Component {
   popup = new Popup(this.page);
   
   private boardMenu = this.page.locator(".board-menu");
-  private closeBoardButton = this.page.locator(".js-close-board");
+  private closeBoardButton = this.boardMenu.locator(".js-close-board");
 
   async closeCurrentBoard(): Promise<void> {
     await this.closeBoardButton.click();
