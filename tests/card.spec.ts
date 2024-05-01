@@ -1,7 +1,7 @@
 import { loggedUserWithCardFixture } from "../fixtures/loggedUserWithCardFixture";
 import { loggedUserWithColumnFixture } from "../fixtures/loggedUserWithColumnFixture";
 
-loggedUserWithCardFixture("@TC-4, Verify the ability to delete a card",  async ({ board, boardPage, card }) => {
+loggedUserWithCardFixture.only("@TC-4, Verify the ability to delete a card",  async ({ board, boardPage, card }) => {
   await boardPage.navigate(board.url);
   await boardPage.column.card.clickOnCardByName(card.name);
   await boardPage.column.card.cardEditor.sidebar.archieveOpenedCard();
