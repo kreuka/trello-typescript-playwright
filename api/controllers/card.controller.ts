@@ -3,7 +3,7 @@ import { CreateCard } from "../builders/entities/cardBuilder";
 import { CreateCardResponse } from "../types/CreateCardResponse";
 import { BaseController } from "./base.controller";
 
-export class CardController<T> extends BaseController<T> {
+export class CardController extends BaseController {
   async createCard(data: CreateCard): Promise<CreateCardResponse> {
     return await this.request()
       .setUrl(`${process.env.API_BASE_URL}${APIRoutes.Cards}`)

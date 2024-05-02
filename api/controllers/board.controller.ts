@@ -4,7 +4,7 @@ import { CreateBoard } from "../builders/entities/boardBuilder";
 import { CreateBoardResponse } from "../types/CreateBoardResponse";
 import { BaseController } from "./base.controller";
 
-export class BoardController<T> extends BaseController<T> {
+export class BoardController extends BaseController {
   async createBoard(data: CreateBoard): Promise<CreateBoardResponse> {
     return await this.request()
       .setUrl(`${process.env.API_BASE_URL}${APIRoutes.Boards}`)
