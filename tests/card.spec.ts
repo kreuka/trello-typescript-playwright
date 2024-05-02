@@ -15,9 +15,20 @@ loggedUserWithCardFixture("@TC-4, Verify the ability to delete a card",  async (
   await boardPage.column.card.expectCardByNameIsNotVisible(card.name);
 });
 
-loggedUserWithColumnFixture("@TC-6, Verify the ability to create a card only with name",  async ({ board, boardPage, column }) => {
+loggedUserWithColumnFixture("@TC-6, Verify the ability to create a card [name]",  async ({ board, boardPage, column }) => {
   await boardPage.navigate(board.url);
   const cardName = "@TC-6";
   await boardPage.column.addNewCardInColumnByName(column.name, cardName);
   await boardPage.column.card.expectCardByNameIsVisible(cardName);
+});
+
+loggedUserWithCardFixture("@TC-7, Verify the ability to edit a card [name]",  async ({ board, boardPage, card }) => {
+  await boardPage.navigate(board.url);
+  await boardPage.column.card.clickOnCardByName(card.name);
+  const editedCardName = "@TC-7"; //TODO faker
+  await boardPage.column.card.cardEditor.fillCardTitle(editedCardName);
+  await boardPage.column.card.cardEditor.closeEditor();
+
+  await boardPage.column.card.expectCardByNameIsNotVisible(card.name);
+  await boardPage.column.card.expectCardByNameIsVisible(editedCardName);
 });
