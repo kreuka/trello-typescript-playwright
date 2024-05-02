@@ -1,14 +1,14 @@
 import { loggedUserWithColumnFixture } from "./loggedUserWithColumnFixture";
-import { randomUUID } from "crypto";
 import { CreateCardResponse } from "../api/types/CreateCardResponse";
 import { CardBuilder } from "../api/builders/entities/cardBuilder";
 import { CardController } from "../api/controllers/card.controller";
+import DataGenerator from "../helpers/DataGenerator";
 
 export const loggedUserWithCardFixture = loggedUserWithColumnFixture.extend<{ card: CreateCardResponse }>({
   card: async ({ request, column }, use) => {
     const cardBody = new CardBuilder()
-      .setName(`${randomUUID()}_card`)
-      .setDescription(`${randomUUID()}_description`)
+      .setName(DataGenerator.getPhrase())
+      .setDescription(DataGenerator.getPhrase())
       .setIdList(column.id)
       .build();
 

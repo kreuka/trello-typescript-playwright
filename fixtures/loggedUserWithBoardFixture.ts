@@ -2,13 +2,13 @@ import { loggedUserFixture } from "./loggedUserFixture";
 import { BoardBuilder } from "../api/builders/entities/boardBuilder";
 import { BoardController } from "../api/controllers/board.controller";
 import { CreateBoardResponse } from "../api/types/CreateBoardResponse";
-import { randomUUID } from "crypto";
 import BoardPage from "../page-objects/pages/BoardPage";
+import DataGenerator from "../helpers/DataGenerator";
 
 export const loggedUserWithBoardFixture = loggedUserFixture.extend<{ board: CreateBoardResponse, boardPage: BoardPage }>({
   board: async ({ request }, use) => {
     const boardBody = new BoardBuilder()
-      .setName(`${randomUUID()}_board`)
+      .setName(DataGenerator.getPhrase())
       .setDefaultLists(false)
       .build();
 

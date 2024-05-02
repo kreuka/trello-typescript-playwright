@@ -1,9 +1,10 @@
 import { loggedUserWithBoardFixture } from "../fixtures/loggedUserWithBoardFixture";
+import DataGenerator from "../helpers/DataGenerator";
 
 loggedUserWithBoardFixture("@TC-3, Verify the ability to create a column",  async ({ board, boardPage }) => {
   await boardPage.navigate(board.url);
   
-  const columnName = "Column 1";
+  const columnName = DataGenerator.getPhrase();
   await boardPage.column.addNewColumn(columnName);
   await boardPage.column.clickOnCloseIcon();
 

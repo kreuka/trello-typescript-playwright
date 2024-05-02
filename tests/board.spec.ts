@@ -1,5 +1,6 @@
 import { loggedUserFixture } from "../fixtures/loggedUserFixture";
 import { loggedUserWithBoardFixture } from "../fixtures/loggedUserWithBoardFixture";
+import DataGenerator from "./../helpers/DataGenerator";
 import BoardPage from "../page-objects/pages/BoardPage";
 
 loggedUserFixture("@TC-2, Verify the ability to create a board", async ({  page, homePage }) => {
@@ -7,7 +8,7 @@ loggedUserFixture("@TC-2, Verify the ability to create a board", async ({  page,
   await homePage.header.clickOnCreate();
   await homePage.header.chooseCreateBoardOptionFromCreateDropdown();
 
-  const boardTitle = "My board 1";
+  const boardTitle = DataGenerator.getPhrase();
   await homePage.header.createMenu.fillBoardTitle(boardTitle);
   await homePage.header.createMenu.clickOnCreateBoardButton();
   

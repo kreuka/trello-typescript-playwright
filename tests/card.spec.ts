@@ -1,5 +1,6 @@
 import { loggedUserWithCardFixture } from "../fixtures/loggedUserWithCardFixture";
 import { loggedUserWithColumnFixture } from "../fixtures/loggedUserWithColumnFixture";
+import DataGenerator from "../helpers/DataGenerator";
 
 loggedUserWithCardFixture("@TC-4, Verify the ability to delete a card",  async ({ board, boardPage, card }) => {
   await boardPage.navigate(board.url);
@@ -17,7 +18,7 @@ loggedUserWithCardFixture("@TC-4, Verify the ability to delete a card",  async (
 
 loggedUserWithColumnFixture("@TC-6, Verify the ability to create a card [name]",  async ({ board, boardPage, column }) => {
   await boardPage.navigate(board.url);
-  const cardName = "@TC-6";
+  const cardName = DataGenerator.getPhrase();
   await boardPage.column.addNewCardInColumnByName(column.name, cardName);
   await boardPage.column.card.expectCardByNameIsVisible(cardName);
 });
@@ -25,7 +26,7 @@ loggedUserWithColumnFixture("@TC-6, Verify the ability to create a card [name]",
 loggedUserWithCardFixture("@TC-7, Verify the ability to edit a card [name]",  async ({ board, boardPage, card }) => {
   await boardPage.navigate(board.url);
   await boardPage.column.card.clickOnCardByName(card.name);
-  const editedCardName = "@TC-7"; //TODO faker
+  const editedCardName = DataGenerator.getPhrase();
   await boardPage.column.card.cardEditor.fillCardTitle(editedCardName);
   await boardPage.column.card.cardEditor.closeEditor();
 
