@@ -16,13 +16,6 @@ export default defineConfig({
   workers: process.env.CI ? 4 : 1,
   reporter: [
     process.env.CI ? ["blob"] : ["html"],
-    [
-      "@argos-ci/playwright/reporter",
-      {
-        uploadToArgos: !!process.env.CI,
-        token: process.env.ARGOS_TOKEN,
-      },
-    ],
   ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
