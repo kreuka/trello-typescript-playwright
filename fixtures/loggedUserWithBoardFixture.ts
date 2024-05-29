@@ -16,7 +16,7 @@ export const loggedUserWithBoardFixture = loggedUserFixture.extend<{ board: Crea
 
     await use(createBoardResponse);
 
-    await new BoardController(request).deleteBoard(createBoardResponse.id);
+    await new BoardController(request).deleteBoardById(createBoardResponse.id);
   },
   boardPage: async ({ page }, use) => {
     const boardPage = new BoardPage(page);
